@@ -1,7 +1,6 @@
 # Variables
 VENV_NAME = venv
 PYTHON = python3
-REQUIREMENTS_FILE = requirements.txt
 BASH_CONFIG = openrc.sh
 
 # Couleurs pour l'affichage
@@ -17,7 +16,7 @@ PACKAGES = openstackclient
 .PHONY: all setup install clean help activate
 
 # Cible par défaut
-all: env terraform
+all: env terraform docker
 
 # Crée l'environnement virtuel
 # Met à jour pip dans l'environnement virtuel
@@ -33,10 +32,10 @@ pipx:
 
 
 # Installe les paquets depuis requirements.txt
-install: $(REQUIREMENTS_FILE)
+install:
 	@echo "$(YELLOW)Installation des paquets...$(NC)"
 	pipx install $(PACKAGES) --include-deps
-	echo "$(GREEN)Paquets installés depuis $(REQUIREMENTS_FILE)$(NC)"
+	echo "$(GREEN)Paquets installés depuis $(NC)"
 
 
 # Configuration complète
@@ -48,3 +47,7 @@ env: pipx install
 terraform:
 	echo $$(echo creds.env | xargs) 
 	env $$(cat creds.env | xargs)  make -C application
+
+ansible:
+	ansible-galaxy role install geerlingguy.docker
+	cd Ansible && ansible-playbook install_docker.yml
