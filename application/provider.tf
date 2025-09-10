@@ -6,11 +6,11 @@ required_version    = ">= 1.13.1"                    # Prend en compte les versi
       source  = "terraform-provider-openstack/openstack"
       version = ">= 3.3.2"
     }
+    ansible = {
+      version = "~> 1.3.0"
+      source = "ansible/ansible"
+    }
 
-    #    ovh = {
-    #  source  = "ovh/ovh"
-    #  version = ">= 2.7.0"
-    #}
   }
 }
 

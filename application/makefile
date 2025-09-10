@@ -2,6 +2,8 @@ all: apply
 
 apply: plan
 	terraform apply
+	ansible-inventory --list
+	ansible-playbook install_docker.yml
 
 plan: workspace
 	terraform plan
