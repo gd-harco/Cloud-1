@@ -1,0 +1,21 @@
+all: # racine obligatoire du fichier yaml
+  children: # Permet de creer des groupes imbriqués
+    frontend: # Premier groupe d'host de l'inventaire
+      hosts: # les host du groups
+        web1: # nom de l'host
+          ansible_host: 10.0.0.11 #adresse ip
+          ansible_user: deploy #utilisateur utilise par ansible
+        web2:
+          ansible_host: 10.0.0.12
+          ansible_user: deploy
+      vars: # Variable(s) Communes(s) aux 2 Host du groupe 
+        nginx_version: "1.18.0"
+    backend: # Second groupe d'host de l'inventaire
+      hosts:
+        db1:
+          ansible_host: 10.0.0.21
+          ansible_user: dbuser
+    app: # Groupe de groupe, peux contenir des variables de groupes, utile pour appliquer un playbook a plusieurs groupe
+      children:
+        frontend:
+        backend:
