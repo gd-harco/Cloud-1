@@ -11,8 +11,6 @@ NC = \033[0m # No Color
 
 PACKAGES = openstackclient
 
-.env=
-
 .PHONY: all setup install clean help activate
 
 # Cible par défaut
