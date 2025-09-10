@@ -22,3 +22,17 @@ resource "openstack_compute_instance_v2" "test_terraform_instance" {
     ]
   }
 }
+
+resource "ansible_group" "ovh" {
+  name = "ovh"
+}
+
+resource "ansible_host" "server1" {
+  name = openstack_compute_instance_v2.test_terraform_instance.id
+  groups = [ansible_group.ovh.name]
+  variables = {
+    ansible_host                 = openstack_compute_instance_v2.test_terraform_instance.access_ip_v4
+    ansible_user                 = "debian"
+    ansible_ssh_private_key_file = "/Users/srt20/Projets/outscale/labs/terraform/lab01/my_key.pem"
+  }
+}
