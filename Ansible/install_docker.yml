@@ -1,0 +1,18 @@
+---
+- name: Configurer Docker sur la machine distante
+  hosts: ovh
+
+  tasks:
+    - name: Populate package facts
+      ansible.builtin.package_facts:
+        manager: auto
+    
+    - name: notifier de l'absence de docker
+      debug:
+        msg: "Docker package not found, will install"
+      when: "'docker' not in ansible_facts.packages and 'docker.io' not in ansible_facts.packages and 'docker-ce' not in ansible_facts.packages"
+
+    - name: Executer le role d'installation de Docker 
+      include_role:
+        name: geerlingguy.docker
+      when: "'docker' not in ansible_facts.packages and 'docker.io' not in ansible_facts.packages and 'docker-ce' not in ansible_facts.packages"
