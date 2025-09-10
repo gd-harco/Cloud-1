@@ -48,5 +48,6 @@ terraform:
 	echo $$(echo creds.env | xargs) 
 	env $$(cat creds.env | xargs)  make -C application
 
-docker:
-	ansible-playbook .Ansible/install_docker.yml
+ansible:
+	ansible-galaxy role install geerlingguy.docker
+	cd Ansible && ansible-playbook install_docker.yml
