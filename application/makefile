@@ -4,6 +4,7 @@ apply: plan
 	terraform apply
 	ansible-inventory --list
 	ansible-playbook install_docker.yml
+	ansible-playbook setup_proxy.yml
 	ansible-playbook copy_webapp.yml 
 
 plan: workspace

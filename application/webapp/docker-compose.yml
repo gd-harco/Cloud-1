@@ -23,13 +23,15 @@ services:
     restart: always
     depends_on:
       - db
-    ports:
-      - 8080:80
+    # ports:
+    #   - 8080:80
     env_file: ./.env
     volumes:
       - WordPress:/var/www/html
     networks:
       - inception
+    labels:
+      - traefik.http.routers.wordpress.rule=Host(`cloud-1.ft-server.fr`)
   
   # wp-cli:
   #   image: wordpress:cli
@@ -68,5 +70,4 @@ volumes:
 
 networks:
   inception:
-    name: inception
-    driver: bridge
+    external: true

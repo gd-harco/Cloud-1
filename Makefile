@@ -57,9 +57,6 @@ terraform:
 	echo $$(echo creds.env | xargs) 
 	env $$(cat creds.env | xargs)  make -C application
 
-ansible:
-	cd Ansible && ansible-playbook install_docker.yml
-
 # Aide
 help:
 	@echo "$(GREEN)Commandes disponibles :$(NC)"
