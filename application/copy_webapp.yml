@@ -1,0 +1,33 @@
+---
+- name : uploader et deployer la webapp
+  hosts: ovh
+  become: yes
+  become_user: "debian"
+  vars:
+    distant_path: "/home/debian/webapp/"
+
+  tasks:
+
+    - name: Copy file to the instance
+      ansible.builtin.copy:  
+        dest: "{{distant_path}}"
+        src: "./webapp/"
+        owner: "debian"
+
+    - name: Rename env file
+      ansible.builtin.command: mv {{distant_path}}srcs/.env.dummy {{distant_path}}srcs/.env 
+
+    - name: Create mariadb folder for volume
+      ansible.builtin.file:
+        path: /home/debian/data/mariadb
+        state: directory
+    
+    - name: Create wordpress folder for volume
+      ansible.builtin.file:
+        path: /home/debian/data/wordpress
+        state: directory
+    
+    - name: Up the webapp
+      community.docker.docker_compose_v2:
+        build: always
+        project_src: "{{distant_path}}srcs/"

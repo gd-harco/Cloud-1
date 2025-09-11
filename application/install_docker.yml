@@ -9,5 +9,7 @@
         - name: Installer Docker si non trouve
           include_role:
             name: geerlingguy.docker
+          vars:
+            docker_users: "debian"
       become: yes
       # when: "'docker' not in ansible_facts.packages and 'docker.io' not in ansible_facts.packages and 'docker-ce' not in ansible_facts.packages"
