@@ -14,20 +14,18 @@
         src: "./webapp/"
         owner: "debian"
 
-    - name: Rename env file
-      ansible.builtin.command: mv {{distant_path}}srcs/.env.dummy {{distant_path}}srcs/.env 
+    # - name: send the site archive
+    #   ansible.builtin.copy:  
+    #     dest: "/home/debian/"
+    #     src: "./data.tar.gz"
+    #     owner: "debian"
 
-    - name: Create mariadb folder for volume
-      ansible.builtin.file:
-        path: /home/debian/data/mariadb
-        state: directory
-    
-    - name: Create wordpress folder for volume
-      ansible.builtin.file:
-        path: /home/debian/data/wordpress
-        state: directory
-    
+    - name: Extract the archive
+      ansible.builtin.unarchive:
+        src: "./data.tar.gz"
+        dest: "/home/debian/"
+
     - name: Up the webapp
       community.docker.docker_compose_v2:
         build: always
-        project_src: "{{distant_path}}srcs/"
+        project_src: "{{distant_path}}"
