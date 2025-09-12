@@ -12,7 +12,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -37,8 +36,8 @@ services:
       - "--providers.docker.network=inception_nw"
 
       # API & Dashboard 
-      - "--api.dashboard=true"
-      - "--api.insecure=true"
+      - "--api.dashboard=false"
+      - "--api.insecure=false"
 
       # Observability 
       - "--log.level=INFO"
@@ -51,10 +50,10 @@ services:
       - "traefik.enable=true"
 
       # Dashboard router
-      - "traefik.http.routers.dashboard.rule=Host(`traefik.ft-server.fr`)"
-      - "traefik.http.routers.dashboard.entrypoints=websecure"
-      - "traefik.http.routers.dashboard.service=api@internal"
-      - "traefik.http.routers.dashboard.tls=true"
+      # - "traefik.http.routers.dashboard.rule=Host(`traefik.ft-server.fr`)"
+      # - "traefik.http.routers.dashboard.entrypoints=websecure"
+      # - "traefik.http.routers.dashboard.service=api@internal"
+      # - "traefik.http.routers.dashboard.tls=true"
 
       # # Basic‑auth middleware
       # - "traefik.http.middlewares.dashboard-auth.basicauth.users=<PASTE_HASH_HERE>"
