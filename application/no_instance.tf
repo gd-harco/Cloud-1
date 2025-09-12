@@ -44,3 +44,11 @@ resource "ovh_domain_zone_record" "ft-server" {
   ttl       = 300
   target    = openstack_compute_instance_v2.test_terraform_instance.access_ip_v4
 } 
+
+resource "ovh_domain_zone_record" "ft-server" {
+  zone      = "ft-server.fr"
+  subdomain = "traefik"
+  fieldtype = "A"
+  ttl       = 300
+  target    = openstack_compute_instance_v2.test_terraform_instance.access_ip_v4
+} 
