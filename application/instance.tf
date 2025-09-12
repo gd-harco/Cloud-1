@@ -1,7 +1,7 @@
 # Création d'une ressource de paire de clés SSH
 resource "openstack_compute_keypair_v2" "test_keypair" {
   name       = "test_keypair"            # Nom de la clé SSH à utiliser pour la création
-  public_key = file("~/.ssh/id_ed25519.pub") # Chemin vers votre clé SSH précédemment générée
+  public_key = file("~/.ssh/id_ed25519_ovh.pub") # Chemin vers votre clé SSH précédemment générée
 }
 
 # Création d'une instance
@@ -37,7 +37,7 @@ resource "ansible_host" "server1" {
   }
 }
 
-resource "ovh_domain_zone_record" "ft-server" {
+resource "ovh_domain_zone_record" "ft-server-cloud-1" {
   zone      = "ft-server.fr"
   subdomain = "cloud-1"
   fieldtype = "A"
@@ -45,7 +45,7 @@ resource "ovh_domain_zone_record" "ft-server" {
   target    = openstack_compute_instance_v2.test_terraform_instance.access_ip_v4
 } 
 
-resource "ovh_domain_zone_record" "ft-server" {
+resource "ovh_domain_zone_record" "ft-server-traefik" {
   zone      = "ft-server.fr"
   subdomain = "traefik"
   fieldtype = "A"
