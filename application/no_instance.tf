@@ -1,7 +1,7 @@
 # Création d'une ressource de paire de clés SSH
 resource "openstack_compute_keypair_v2" "test_keypair" {
   name       = "test_keypair"            # Nom de la clé SSH à utiliser pour la création
-  public_key = file("~/.ssh/id_ed25519.pub") # Chemin vers votre clé SSH précédemment générée
+  public_key = file("~/.ssh/id_ed25519_ovh.pub") # Chemin vers votre clé SSH précédemment générée
 }
 
 # Création d'une instance

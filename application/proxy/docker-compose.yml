@@ -7,7 +7,7 @@ services:
       - no-new-privileges:true
 
     networks:
-      - inception
+      - inception_nw
 
     ports:
       - "80:80"
@@ -34,7 +34,7 @@ services:
       # Providers 
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=inception"
+      - "--providers.docker.network=inception_nw"
 
       # API & Dashboard 
       - "--api.dashboard=true"
@@ -63,5 +63,5 @@ services:
 
 
 networks:
-  inception:
+  inception_nw:
     external: true
