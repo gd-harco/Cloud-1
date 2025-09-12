@@ -1,0 +1,24 @@
+---
+- name : uploader et deployer le reverse proxy
+  hosts: ovh
+  become: yes
+  become_user: "debian"
+  vars:
+    distant_path: "/home/debian/webapp/"
+
+  tasks:
+
+    - name: Copy file to the instance
+      ansible.builtin.copy:  
+        dest: "/home/debian/"
+        src: "./proxy"
+        owner: "debian"
+
+    - name: Create the Docker Network
+      community.docker.docker_network:
+        name: inception
+
+    - name: Up the traefik
+      community.docker.docker_compose_v2:
+        build: always
+        project_src: "/home/debian/proxy"
