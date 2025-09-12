@@ -10,7 +10,7 @@ PACKAGES = openstackclient
 .PHONY: all setup install clean help activate
 
 # Cible par défaut
-all: env terraform docker
+all: env terraform
 
 # Crée l'environnement virtuel et met à jour pip
 pipx: 

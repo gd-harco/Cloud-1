@@ -1,0 +1,72 @@
+services:
+
+  # #nginx server
+  # nginx:
+  #   depends_on:
+  #     - wordpress
+  #   image: nginx
+  #   container_name: nginx
+  #   ports:
+  #     - "443:443"
+  #   build:
+  #     context: requirements/nginx
+  #     dockerfile: Dockerfile
+  #   restart: on-failure
+  #   networks:
+  #     - inception
+  #   volumes:
+  #     - WordPress:/var/www/html
+
+
+  wordpress:
+    image: wordpress
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 8080:80
+    env_file: ./.env
+    volumes:
+      - WordPress:/var/www/html
+    networks:
+      - inception
+  
+  # wp-cli:
+  #   image: wordpress:cli
+  #   container_name: wp-cli
+  #   depends_on: 
+  #     - wordpress
+  #   volumes:
+  #     - DataBase:/var/lib/mysql
+  #     - WordPress:/var/www/html
+  #   networks:
+  #     - inception
+  #   env_file: ./.env
+
+  db:
+    image: mysql:8.0
+    restart: always
+    env_file: ./.env
+    volumes:
+      - DataBase:/var/lib/mysql
+    networks:
+      - inception
+
+volumes:
+  WordPress:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/debian/data/wordpress
+  DataBase:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/debian/data/mariadb
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
