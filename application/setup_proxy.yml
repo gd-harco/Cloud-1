@@ -7,7 +7,23 @@
     distant_path: "/home/debian/webapp/"
 
   tasks:
-
+    - name: Ensure the cert folder exist
+      ansible.builtin.file:
+        path: ~/certs
+        state: directory
+    
+    - name: Create private key (RSA, 4096 bits)
+      community.crypto.openssl_privatekey:
+        path: ~/certs/certificate.key
+        force: false
+    
+    - name: Create simple self-signed certificate
+      community.crypto.x509_certificate:
+        path: ~/certs/certificate.crt
+        privatekey_path: ~/certs/certificate.key
+        provider: selfsigned
+        force: false
+        
     - name: Copy file to the instance
       ansible.builtin.copy:  
         dest: "/home/debian/"
