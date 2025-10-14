@@ -13,7 +13,7 @@ services:
       - "traefik.http.routers.wordpress.entrypoints=websecure"
       - "traefik.http.routers.wordpress.tls=true"
       - "traefik.http.routers.wordpress.rule=Host(`cloud-1.ft-server.fr`)"
-    user: '33'
+    user: "33"
 
   wp-cli:
     image: wordpress:cli
@@ -29,8 +29,8 @@ services:
     volumes:
       - WordPress:/var/www/html
     command: >
-      /bin/sh -c 'wp core install --path="/var/www/html" --url=$WORDPRESS_URL --title=$WORDPRESS_TITLE --admin_user=$WORDPRESS_ADMIN_USER --admin_password=$WORDPRESS_ADMIN_PASS --admin_email=$WORDPRESS_ADMIN_MAIL'
-    user: '33'
+      /bin/sh -c 'wp core install --path="/var/www/html" --url=$WORDPRESS_URL --title="$WORDPRESS_TITLE" --admin_user=$WORDPRESS_ADMIN_USER --admin_password=$WORDPRESS_ADMIN_PASS --admin_email=$WORDPRESS_ADMIN_MAIL'
+    user: "33"
 
   db:
     image: mysql:8.0
@@ -41,25 +41,34 @@ services:
     networks:
       - wordpress_nw
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "$$MYSQL_USER", '--password=$$MYSQL_PASSWORD']
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "127.0.0.1",
+          "-u",
+          "$$MYSQL_USER",
+          "--password=$$MYSQL_PASSWORD",
+        ]
       start_period: 5s
       interval: 5s
       timeout: 5s
       retries: 55
 
-
 volumes:
   WordPress:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
+      type: "none"
+      o: "bind"
       device: /home/debian/data/wordpress
   DataBase:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
+      type: "none"
+      o: "bind"
       device: /home/debian/data/mariadb
 
 networks:
