@@ -5,7 +5,7 @@ GREEN = \033[0;32m
 YELLOW = \033[1;33m
 RED = \033[0;31m
 NC = \033[0m # No Color
-PACKAGES = openstackclient 
+PACKAGES = openstackclient
 
 .PHONY: all setup install clean help activate
 
@@ -13,7 +13,7 @@ PACKAGES = openstackclient
 all: env terraform
 
 # Crée l'environnement virtuel et met à jour pip
-pipx: 
+pipx:
 	@echo "$(YELLOW)Vérification de pip...$(NC)"
 	@pip show pip >/dev/null 2>&1 && echo "$(GREEN)✓ pip déjà installé$(NC)" || (echo "$(YELLOW)Mise à jour de pip...$(NC)" && pip install --upgrade pip && echo "$(GREEN)Pip mis à jour$(NC)")
 	@echo "$(YELLOW)Vérification de pipx...$(NC)"
@@ -34,7 +34,7 @@ install:
 	@ansible-galaxy role list | grep -q "geerlingguy.docker" 2>/dev/null && echo "$(GREEN)✓ geerlingguy.docker déjà installé$(NC)" || (echo "$(YELLOW)Installation des roles ansible docker...$(NC)" && ansible-galaxy role install geerlingguy.docker && echo "$(GREEN)Role geerlingguy.docker installé$(NC)")
 
 # Configuration complète
-env: pipx install  
+env: pipx install
 	@echo "$(GREEN)===========================================$(NC)"
 	@echo "$(GREEN)Configuration de l'environnement terminée !$(NC)"
 	@echo "$(GREEN)===========================================$(NC)"
@@ -54,8 +54,12 @@ status:
 	@ansible-galaxy role list 2>/dev/null | grep -q "geerlingguy.docker" && echo "  $(GREEN)✅ geerlingguy.docker$(NC)" || echo "  $(RED)❌ geerlingguy.docker$(NC)"
 
 terraform:
-	echo $$(echo creds.env | xargs) 
+	echo $$(echo creds.env | xargs)
 	env $$(cat creds.env | xargs)  make -C application
+
+destroy:
+	echo $$(echo creds.env | xargs)
+	env $$(cat creds.env | xargs)  make -C application destroy
 
 # Aide
 help:

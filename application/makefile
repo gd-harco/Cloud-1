@@ -5,7 +5,7 @@ apply: plan
 	ansible-inventory --list
 	ansible-playbook install_docker.yml
 	ansible-playbook setup_proxy.yml
-	ansible-playbook copy_webapp.yml 
+	ansible-playbook copy_webapp.yml
 
 plan: workspace
 	terraform plan
@@ -16,3 +16,5 @@ workspace: init
 init:
 	terraform init
 
+destroy:
+	terraform destroy

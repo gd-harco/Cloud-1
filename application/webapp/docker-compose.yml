@@ -14,11 +14,11 @@ services:
       - "traefik.http.routers.wordpress.tls=true"
       - "traefik.http.routers.wordpress.rule=Host(`cloud-1.ft-server.fr`)"
     user: '33'
-  
+
   wp-cli:
     image: wordpress:cli
     container_name: wp-cli
-    depends_on: 
+    depends_on:
       wordpress:
         condition: service_started
       db:
@@ -29,7 +29,7 @@ services:
     volumes:
       - WordPress:/var/www/html
     command: >
-      /bin/sh -c 'wp core install --path="/var/www/html" --url=$WORDPRESS_URL --title=$WORDPRESS_TITTLE --admin_user=$WORDPRESS_ADMIN_USER --admin_password=$WORDPRESS_ADMIN_PASS --admin_email=$WORDPRESS_ADMIN_MAIL'
+      /bin/sh -c 'wp core install --path="/var/www/html" --url=$WORDPRESS_URL --title=$WORDPRESS_TITLE --admin_user=$WORDPRESS_ADMIN_USER --admin_password=$WORDPRESS_ADMIN_PASS --admin_email=$WORDPRESS_ADMIN_MAIL'
     user: '33'
 
   db:
