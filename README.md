@@ -87,6 +87,11 @@ make destroy
 
 La suppression de l’instance peut entraîner la perte des données qui y sont stockées. Sauvegardez-les au préalable si nécessaire.
 
+## Répartition des tâches
+
+- **Brieuc** : initialisation du projet et mise en place d’OpenStack, automatisation du lancement de l’instance, création dynamique de la règle DNS, valeurs Ansible dynamiques, `Makefile` (environnement virtuel Python, installation incrémentale), gabarit d’environnement, organisation du répertoire `ressources`, ainsi que le `docker compose` (réseau, URL d’installation, `.env` ignoré).
+- **Guillaume** : prise en main d’Ansible (inventaire, rôles), playbooks d’installation de Docker et de déploiement de l’application sur l’instance, passage à l’image officielle, reverse proxy Traefik avec HTTPS, redirection des labels WordPress vers l’entrypoint `websecure`, restriction de l’accès au tableau de bord Traefik, réglages de la connexion SSH d’Ansible, conversion de la première partie du `Makefile` en playbook, et rédaction du README.
+
 ## Sécurité et limites
 
 - Le certificat TLS généré par le playbook est **auto-signé** : les navigateurs afficheront un avertissement. Ce déploiement est un exercice pédagogique, pas une configuration prête pour la production.
